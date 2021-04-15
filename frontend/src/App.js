@@ -1,10 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
 
+import { Login } from './components/auth/Login'
+import { Home } from './components/Home'
+
 function App() {
+  const currentUser = () => {
+    const user = localStorage.getItem('user')
+    return(user)
+  }
   return (
     <div className="App">
-      <h1>HOME</h1>
+      {currentUser ? <Home /> : <Login />}
     </div>
   );
 }
