@@ -66,8 +66,8 @@ export const Login = () => {
         "user",
         JSON.stringify({
           "access-token": response.headers["access-token"],
-          client: response.headers["client"],
-          uid: response.data.data.uid,
+          "client": response.headers["client"],
+          "uid": response.data.data.uid
         })
       );
       window.location = "/";
