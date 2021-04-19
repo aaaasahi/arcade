@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Link } from 'react-router-dom'
 
 export const Header = () => {
   const currentUser = localStorage.getItem("user");
@@ -16,14 +17,17 @@ export const Header = () => {
   };
   return (
     <div>
-      {currentUser && (
-        <div>
+      {currentUser ?
+        <>
           {JSON.parse(currentUser).uid}
-          <a href="#" onClick={handleSignOut}>
-            Sign out
-          </a>
-        </div>
-      )}
+          <a href="#" onClick={handleSignOut} >Sign out</a>
+        </> :
+        <>
+          <Link to="/signup">Signup</Link>
+          <Link to="/login" style={{padding: '10px'}}>Login</Link>
+        </>
+      }
     </div>
+      
   );
 };
