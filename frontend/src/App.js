@@ -7,6 +7,7 @@ import { Signup } from "./components/auth/Signup";
 
 const currentUser = () => {
   const user = localStorage.getItem("user");
+  console.log(user);
   return user;
 };
 
@@ -18,7 +19,7 @@ function App() {
         <Home />
       ) : (
         <>
-          <Login />
+          <Signup />
         </>
       )}
     </div>
