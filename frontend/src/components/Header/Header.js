@@ -1,49 +1,25 @@
 import React, { useCallback, useState } from "react";
-import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import PersonIcon from "@material-ui/icons/Person";
-import EventIcon from "@material-ui/icons/Event";
-import ForumIcon from "@material-ui/icons/Forum";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
-const useStyles = makeStyles((theme) => ({
+import { DrawerList } from "./DrawerList";
+import { MenuIconButton } from "./MenuIconButton";
+
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   title: {
     flexGrow: 1,
-  },
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: "auto",
   },
 }));
 
 export const Header = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-
-  const history = useHistory();
-
-  const onClickCommunity = useCallback(() => history.push("/community"), []);
-  const onClickEvent = useCallback(() => history.push("/event"), []);
-  const onClickProfile = useCallback(() => history.push("/profile"), []);
 
   const handleDrawerToggle = useCallback(
     (event) => {
@@ -60,32 +36,12 @@ export const Header = () => {
 
   const currentUser = localStorage.getItem("user");
 
-  const handleSignOut = function (e) {
-    e.preventDefault();
-    axios({
-      method: "DELETE",
-      url: "http://localhost:3000/auth/sign_out",
-      data: JSON.parse(localStorage.user),
-    }).then(() => {
-      localStorage.removeItem("user");
-      window.location = "/";
-    });
-  };
-
   return (
     <>
       <div className={classes.root}>
         <AppBar position="static" color="transparent">
           <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-              onClick={handleDrawerToggle}
-            >
-              <MenuIcon />
-            </IconButton>
+            <MenuIconButton handleDrawerToggle={handleDrawerToggle} />
             <Typography variant="h6" className={classes.title}>
               Arcade
             </Typography>
@@ -93,9 +49,6 @@ export const Header = () => {
               {currentUser ? (
                 <>
                   {JSON.parse(currentUser).uid}
-                  <a href="#" onClick={handleSignOut}>
-                    Sign out
-                  </a>
                 </>
               ) : (
                 <>
@@ -110,34 +63,7 @@ export const Header = () => {
         </AppBar>
       </div>
       <nav>
-        <Drawer anchor="left" open={open} onClose={handleDrawerToggle}>
-          <List>
-            <ListItem button onClick={onClickCommunity}>
-              <ListItemIcon>
-                <ForumIcon />
-              </ListItemIcon>
-              <ListItemText>コミュニティ</ListItemText>
-            </ListItem>
-            <ListItem button onClick={onClickEvent}>
-              <ListItemIcon>
-                <EventIcon />
-              </ListItemIcon>
-              <ListItemText>イベント</ListItemText>
-            </ListItem>
-            <ListItem button onClick={onClickProfile}>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText>プロフィール</ListItemText>
-            </ListItem>
-            <ListItem button onClick={handleSignOut}>
-              <ListItemIcon>
-                <ExitToAppIcon />
-              </ListItemIcon>
-              <ListItemText>ログアウト</ListItemText>
-            </ListItem>
-          </List>
-        </Drawer>
+        <DrawerList open={open} handleDrawerToggle={handleDrawerToggle}/>
       </nav>
     </>
   );
