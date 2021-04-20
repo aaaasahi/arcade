@@ -37,19 +37,26 @@ const useStyles = makeStyles((theme) => ({
 
 export const Header = () => {
   const classes = useStyles();
-  const history = useHistory();
   const [open, setOpen] = useState(false);
 
-  const handleDrawerToggle = useCallback((event)=>{
-    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")){
-      return;
-    }
-    setOpen(!open)
-  },[setOpen, open]);
+  const history = useHistory();
 
   const onClickCommunity = useCallback(() => history.push("/community"), []);
   const onClickEvent = useCallback(() => history.push("/event"), []);
   const onClickProfile = useCallback(() => history.push("/profile"), []);
+
+  const handleDrawerToggle = useCallback(
+    (event) => {
+      if (
+        event.type === "keydown" &&
+        (event.key === "Tab" || event.key === "Shift")
+      ) {
+        return;
+      }
+      setOpen(!open);
+    },
+    [setOpen, open]
+  );
 
   const currentUser = localStorage.getItem("user");
 
@@ -75,8 +82,9 @@ export const Header = () => {
               className={classes.menuButton}
               color="inherit"
               aria-label="menu"
+              onClick={handleDrawerToggle}
             >
-              <MenuIcon button onClick={handleDrawerToggle}/>
+              <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
               Arcade
@@ -101,12 +109,8 @@ export const Header = () => {
           </Toolbar>
         </AppBar>
       </div>
-      <>
-        <Drawer
-          anchor="left"
-          open={open}
-          onClose={handleDrawerToggle}
-        >
+      <nav>
+        <Drawer anchor="left" open={open} onClose={handleDrawerToggle}>
           <List className={classes.list} onClick={handleDrawerToggle}>
             <ListItem button onClick={onClickCommunity}>
               <ListItemIcon>
@@ -134,7 +138,7 @@ export const Header = () => {
             </ListItem>
           </List>
         </Drawer>
-      </>
+      </nav>
     </>
   );
 };
