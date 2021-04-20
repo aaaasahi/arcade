@@ -111,7 +111,7 @@ export const Header = () => {
       </div>
       <nav>
         <Drawer anchor="left" open={open} onClose={handleDrawerToggle}>
-          <List className={classes.list} onClick={handleDrawerToggle}>
+          <List>
             <ListItem button onClick={onClickCommunity}>
               <ListItemIcon>
                 <ForumIcon />
