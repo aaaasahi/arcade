@@ -34,7 +34,7 @@ export const DrawerList = (props) => {
     e.preventDefault();
     axios({
       method: "DELETE",
-      url: "http://localhost:3000/auth/sign_out",
+      url: "http://localhost:8000/auth/sign_out",
       data: JSON.parse(localStorage.user),
     }).then(() => {
       localStorage.removeItem("user");
