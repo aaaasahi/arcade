@@ -66,7 +66,7 @@ export const Signup = () => {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "http://localhost:3000/auth",
+      url: "http://localhost:8000/auth",
       data: {
         email: email,
         password: password,

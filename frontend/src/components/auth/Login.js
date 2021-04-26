@@ -55,7 +55,7 @@ export const Login = () => {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "http://localhost:3000/auth/sign_in",
+      url: "http://localhost:8000/auth/sign_in",
       data: {
         email: email,
         password: password,
